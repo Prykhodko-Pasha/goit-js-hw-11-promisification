@@ -3,20 +3,20 @@ const randomIntegerFromInterval = (min, max) => {
 };
 
 const makeTransaction = (transaction) => {
-  const promise = new Promise((resolve, reject) => {
-    const delay = randomIntegerFromInterval(200, 500);
+  const delay = randomIntegerFromInterval(200, 500);
+  return new Promise((resolve, reject) => {
     const canProcess = Math.random() > 0.3;
     setTimeout(() => {
       if (canProcess) {
-        resolve(logSuccess(transaction.id, delay));
+        resolve({ id: transaction.id, time: delay });
+      } else {
+        reject(transaction.id);
       }
-      reject(logError(transaction.id));
     }, delay);
   });
-  return promise;
 };
 
-const logSuccess = (id, time) => {
+const logSuccess = ({ id, time }) => {
   console.log(`Transaction ${id} processed in ${time}ms`);
 };
 
